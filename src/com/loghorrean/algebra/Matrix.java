@@ -8,25 +8,6 @@ public class Matrix {
     private double[][] matrix;
     private int detSign = 1;
 
-    public Matrix() {
-        Scanner in = new Scanner(System.in);
-        try {
-            System.out.println("Enter the number of the rows: ");
-            int len = Integer.parseInt(in.nextLine());
-            if (len < 1) {
-                throw new MatrixException("Rows must be more than 0");
-            }
-            System.out.println("Enter the number of the columns: ");
-            int width = Integer.parseInt(in.nextLine());
-            if (width < 1) {
-                throw new MatrixException("Width must be here more than 0");
-            }
-            //TODO: implement the chaining constructor here
-        } catch (MatrixException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public Matrix(int length, int width) {
         this(length, width, new double[length][width]);
     }
@@ -41,10 +22,27 @@ public class Matrix {
         this.matrix = matrix;
     }
 
-    //TODO: implement the copy constructor
-//    public Matrix(Matrix a) {
-//        this();
-//    }
+    public Matrix(Matrix a) {
+        this.numRows = a.getNumberOfRows();
+        this.numColumns = a.getNumberOfColumns();
+        this.matrix = ArrayCopier.copySecondDimension(a.matrix);
+    }
+
+    public int getNumberOfRows() {
+        return this.matrix.length;
+    }
+
+    public int getNumberOfColumns() {
+        return this.matrix[0].length;
+    }
+
+    public double[][] getMatrix() {
+        return this.matrix;
+    }
+
+    public int getDetSign() {
+        return this.detSign;
+    }
 
     @Override
     public String toString() {
@@ -139,14 +137,21 @@ public class Matrix {
 
     public boolean rowContainsNegatives(int index) {
         double[] row = this.getRowByIndex(index);
-//        for() {
-//
-//        }
+        for(Double rowValue : row) {
+            if (rowValue == 0) {
+                return true;
+            }
+        }
         return false;
     }
 
     public boolean colContainsNegatives(int index) {
-        --index;
+        double[] col = this.getColumnByIndex(index);
+        for (Double columnValue : col) {
+            if (columnValue == 0) {
+                return true;
+            }
+        }
         return false;
     }
 
