@@ -6,7 +6,6 @@ public class Matrix {
     private int numRows;
     private int numColumns;
     private double[][] matrix;
-    private int detSign = 1;
 
     public Matrix(int length, int width) {
         this(length, width, new double[length][width]);
@@ -38,10 +37,6 @@ public class Matrix {
 
     public double[][] getMatrix() {
         return this.matrix;
-    }
-
-    public int getDetSign() {
-        return this.detSign;
     }
 
     @Override
@@ -234,7 +229,6 @@ public class Matrix {
             this.matrix[row1 - 1][i] = this.matrix[row2 - 1][i];
             this.matrix[row2 - 1][i] = temp;
         }
-        this.detSign *= -1;
     }
 
     // замена столбцов col1 и col2 местами
@@ -244,7 +238,6 @@ public class Matrix {
             this.matrix[i][col1 - 1] = this.matrix[i][col2 - 1];
             this.matrix[i][col2 - 1] = temp;
         }
-        this.detSign *= -1;
     }
 
     // получение минора матрицы (квадратной) относительно данного элемента
@@ -420,6 +413,6 @@ public class Matrix {
             Matrix matrix = this.getMinor(1, j+1);
             localDet += sign * this.matrix[0][j] * matrix.getDeterminantRecursively();
         }
-        return localDet * this.detSign;
+        return localDet;
     }
 }
